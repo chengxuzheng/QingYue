@@ -14,6 +14,7 @@
 #import "QYHomeCollectionViewCell.h"
 #import "QYBookDetailViewController.h"
 
+
 //static CGFloat headerViewHeight = 0;
 static NSString *firstHeaderViewIdentifier = @"kFirstRecipeCollectionHeaderViewID";
 static NSString *headerViewIdentifier = @"kRecipeCollectionHeaderViewID";
@@ -23,6 +24,8 @@ static NSString *headerViewIdentifier = @"kRecipeCollectionHeaderViewID";
 @property (strong, nonatomic) UICollectionView *listCollectionView;
 @property (strong, nonatomic)  QYHomePicHeaderCollectionReusableView *listFirstHeaderView;
 @property (strong, nonatomic)  QYHomeCollectionReusableView *listHeaderView;
+@property (nonatomic, strong) UIImageView *tztImageView;
+
 
 @end
 
@@ -35,6 +38,23 @@ static NSString *headerViewIdentifier = @"kRecipeCollectionHeaderViewID";
 //        self.automaticallyAdjustsScrollViewInsets = NO;
     
     [self.view addSubview:self.listCollectionView];
+    [[UIApplication sharedApplication].delegate.window addSubview:self.tztImageView];
+    
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    NSData *data = [kUserDefaults objectForKey:@"tztImage"];
+    UIImage *image = [[UIImage alloc] initWithData:data];
+    
+    _tztImageView.image = image;
+    
+    [UIView animateWithDuration:.35 animations:^{
+        _tztImageView.alpha = 0;
+    } completion:^(BOOL finished) {
+        _tztImageView.hidden = YES;
+    }];
     
 }
 
@@ -161,9 +181,20 @@ static NSString *headerViewIdentifier = @"kRecipeCollectionHeaderViewID";
     [_listCollectionView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.left.right.bottom.equalTo(self.view);
     }];
+    
+    [_tztImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.left.bottom.right.equalTo(self.view);
+    }];
 }
 
 #pragma mark - lazy load
+- (UIImageView *)tztImageView {
+    if (!_tztImageView) {
+        _tztImageView = [[UIImageView alloc] init];
+    }
+    return _tztImageView;
+}
+
 - (UICollectionView *)listCollectionView {
     if (!_listCollectionView) {
         UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];

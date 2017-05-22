@@ -10,6 +10,7 @@
 #import "QYMainTabBarViewController.h"
 #import "DYLimitLengthTextField.h"
 #import "QYforgetPassWordViewController.h"
+#import "QYHomeViewController.h"
 
 @interface QYLoginViewController ()<UITextFieldDelegate>
 /** 头像图片*/
@@ -29,6 +30,7 @@
 /** 忘记密码*/
 @property (nonatomic, strong) UIButton *forgetButton;
 
+
 @end
 
 @implementation QYLoginViewController
@@ -46,6 +48,9 @@
     self.view.backgroundColor = RGB(250, 250, 250, 1.0);
     [self setAutomaticallyAdjustsScrollViewInsets:NO];
 
+    [kUserDefaults removeObjectForKey:@"username"];
+    [kUserDefaults synchronize];
+    
     [self.view addSubview:self.cardTextField];
     [self.view addSubview:self.passwordTextField];
     [self.view addSubview:self.libraryTextField];
@@ -74,6 +79,10 @@
 //登录按钮实现方法
 - (void)completeButtonAction
 {
+    
+    [_cardTextField resignFirstResponder];
+    [_passwordTextField resignFirstResponder];
+    
     if ([_cardTextField.text length] == 0 || [_passwordTextField.text length] == 0) {
         _greenLabel.hidden = NO;
         _messageLabel.hidden = NO;
@@ -88,6 +97,17 @@
         kShowNet(@"正在登录");
         
         if ([response[@"Code"] isEqualToString:@"成功"]) {
+            
+            UIGraphicsBeginImageContext(self.view.bounds.size);
+            [self.view.layer renderInContext:UIGraphicsGetCurrentContext()];
+            UIImage *image= UIGraphicsGetImageFromCurrentImageContext();
+            UIGraphicsEndImageContext();
+            NSData *data = UIImagePNGRepresentation(image);
+            [kUserDefaults setObject:data forKey:@"tztImage"];
+            
+            [kUserDefaults setObject:_cardTextField.text forKey:@"username"];
+            [kUserDefaults synchronize];
+            
             kTimeAfter(1, ^{kShowNet(@"成功登录");});
             
             kTimeAfter(1.5, ^{
@@ -166,9 +186,12 @@
         make.top.equalTo(_loginButton.mas_bottom).offset(15);
         make.height.equalTo(@(20));
     }];
+
 }
 
 #pragma mark - lazy load
+
+
 - (DYLimitLengthTextField *)cardTextField
 {
     if (!_cardTextField) {
@@ -185,7 +208,7 @@
         leftIcon.contentMode = UIViewContentModeCenter;
         _cardTextField.leftView = leftIcon;
         _cardTextField.leftViewMode = UITextFieldViewModeAlways;
-        _cardTextField.keyboardType = UIKeyboardTypeNamePhonePad;
+//        _cardTextField.keyboardType = UIKeyboardTypeNamePhonePad;
         _cardTextField.font = [UIFont systemFontOfSize:17];
         _cardTextField.borderStyle = UITextBorderStyleNone;
         _cardTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
@@ -212,7 +235,7 @@
         leftIcon.contentMode = UIViewContentModeCenter;
         _passwordTextField.leftView = leftIcon;
         _passwordTextField.leftViewMode = UITextFieldViewModeAlways;
-        _passwordTextField.keyboardType = UIKeyboardTypeNamePhonePad;
+//        _passwordTextField.keyboardType = UIKeyboardTypeNamePhonePad;
         _passwordTextField.font = [UIFont systemFontOfSize:17];
         _passwordTextField.borderStyle = UITextBorderStyleNone;
         _passwordTextField.clearButtonMode = UITextFieldViewModeWhileEditing;

@@ -55,4 +55,6 @@
 
 #define kTimeAfter(T,Block) dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(T * NSEC_PER_SEC)), dispatch_get_main_queue(), Block);
 
+#define kUserDefaults [NSUserDefaults standardUserDefaults]
+
 #endif /* Parameters_h */
