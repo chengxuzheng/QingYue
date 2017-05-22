@@ -64,6 +64,7 @@ static NSString *headerViewIdentifier = @"kRecipeCollectionHeaderViewID";
 //    [self.listCollectionView reloadData];
     
     QYHotBookListViewController *bookListVC = [[QYHotBookListViewController alloc] init];
+    bookListVC.hidesBottomBarWhenPushed = YES;
     
     switch (button.tag) {
         case 0:
@@ -183,7 +184,7 @@ static NSString *headerViewIdentifier = @"kRecipeCollectionHeaderViewID";
     }];
     
     [_tztImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.left.bottom.right.equalTo(self.view);
+        make.top.left.bottom.right.equalTo([UIApplication sharedApplication].delegate.window);
     }];
 }
 

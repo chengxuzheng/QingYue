@@ -103,6 +103,7 @@
             UIImage *image= UIGraphicsGetImageFromCurrentImageContext();
             UIGraphicsEndImageContext();
             NSData *data = UIImagePNGRepresentation(image);
+            
             [kUserDefaults setObject:data forKey:@"tztImage"];
             
             [kUserDefaults setObject:_cardTextField.text forKey:@"username"];
