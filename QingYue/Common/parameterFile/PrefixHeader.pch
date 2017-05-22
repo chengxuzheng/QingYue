@@ -1,0 +1,44 @@
+//
+//  PrefixHeader.pch
+//  QingYue
+//
+//  Created by leilei on 2017/3/26.
+//  Copyright © 2017年 com.lanou.product_A. All rights reserved.
+//
+
+#ifndef PrefixHeader_pch
+#define PrefixHeader_pch
+#import <AFNetworking.h>
+#import <FMDB.h>
+#import <Masonry.h>
+#import <JSONKit.h>
+#import <MJRefresh.h>
+#import <UIImageView+WebCache.h>
+#import <MBProgressHUD.h>
+#import <sqlite3.h>
+#import <JavaScriptCore/JavaScriptCore.h>
+//添加遮罩层
+#import "UIView+GKExtension.h"
+#import "GKCover.h"
+//自定义弹窗
+#import "DYSaveShotView.h"
+
+//#import "DataBaseManager.h"
+//#import "CommonLabel.h"
+//#import "TKAlertCenter.h"
+//#import "MBDownloadView.h"
+#import "Parameters.h"
+#import "UIViewExt.h"
+//#import "UIView+UIViewController.h"
+//#import "TestingTool.h"
+//#import "ImageViewController.h"
+#import "YCRequestDataService.h"
+//#import "UIButton+EnlargeTouchArea.h"
+//#import "NetRequest.h"
+//#import "ConvertMD5.h"
+#import "UIViewController+YCCommon.h"
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+#endif /* PrefixHeader_pch */
