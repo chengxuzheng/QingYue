@@ -8,7 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
-static NSString *IntranetAPI = @"http://192.168.11.248:8889/dayoshop/";  // 内网
+//static NSString *IntranetAPI = @"http://192.168.11.248:8889/dayoshop/";  // 内网
+static NSString *IntranetAPI = @"http://121.41.18.18:8022/";
 
 typedef enum : NSUInteger {
     RequestHostTypeStyleOfficial,

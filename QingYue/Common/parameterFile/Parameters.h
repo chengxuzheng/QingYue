@@ -49,4 +49,10 @@
 #define NetWorkingText          @"努力加载中..."
 #define ISStringEqual(A,B)  [A isEqualToString:B]
 
+
+#define kShowNet(S) [SVProgressHUD showWithStatus:S]
+#define kHideNet [SVProgressHUD dismiss]
+
+#define kTimeAfter(T,Block) dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(T * NSEC_PER_SEC)), dispatch_get_main_queue(), Block);
+
 #endif /* Parameters_h */

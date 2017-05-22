@@ -74,18 +74,36 @@
 //登录按钮实现方法
 - (void)completeButtonAction
 {
-    [_cardTextField resignFirstResponder];
-    [_passwordTextField resignFirstResponder];
-    [_libraryTextField resignFirstResponder];
-    if ([_cardTextField.text length] == 0) {
+    if ([_cardTextField.text length] == 0 || [_passwordTextField.text length] == 0) {
         _greenLabel.hidden = NO;
         _messageLabel.hidden = NO;
-    } else {
-        _greenLabel.hidden = YES;
-        _greenLabel.hidden = YES;
-        QYMainTabBarViewController *mtbVC = [[QYMainTabBarViewController alloc] init];
-        [UIApplication sharedApplication].keyWindow.rootViewController = mtbVC;
+        return;
     }
+    
+    NSDictionary *param = @{@"Username":_cardTextField.text,
+                            @"Password":_passwordTextField.text};
+    
+    [[YCRequestDataService sharedManager] Post:@"account/loginEx" parameters:param success:^(id response) {
+        
+        kShowNet(@"正在登录");
+        
+        if ([response[@"Code"] isEqualToString:@"成功"]) {
+            kTimeAfter(1, ^{kShowNet(@"成功登录");});
+            
+            kTimeAfter(1.5, ^{
+                QYMainTabBarViewController *mtbVC = [[QYMainTabBarViewController alloc] init];
+                [UIApplication sharedApplication].keyWindow.rootViewController = mtbVC;
+            })
+        } else {
+            kTimeAfter(1, ^{kShowNet(response[@"Exception"]);});
+        }
+        
+    } failure:^{
+
+    }];
+    
+    
+    
 }
 
 //忘记密码实现方法
@@ -117,17 +135,19 @@
         make.top.equalTo(_cardTextField.mas_bottom).offset(10);
         make.height.equalTo(@(50));
     }];
-    [_libraryTextField mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.view.mas_left).offset(15);
-        make.right.equalTo(self.view.mas_right).offset(- 15);
-        make.height.equalTo(@(50));
-        make.top.equalTo(_passwordTextField.mas_bottom).offset(10);
-    }];
+    
+//    [_libraryTextField mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.equalTo(self.view.mas_left).offset(15);
+//        make.right.equalTo(self.view.mas_right).offset(- 15);
+//        make.height.equalTo(@(50));
+//        make.top.equalTo(_passwordTextField.mas_bottom).offset(10);
+//    }];
+    
     [_loginButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.view.mas_left).offset(15);
         make.right.equalTo(self.view.mas_right).offset(- 15);
         make.height.equalTo(@(50));
-        make.top.equalTo(_libraryTextField.mas_bottom).offset(45);
+        make.top.equalTo(_passwordTextField.mas_bottom).offset(45);
     }];
     [_messageLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.view.mas_centerX);
@@ -199,6 +219,7 @@
         [_passwordTextField becomeFirstResponder];
         _passwordTextField.limitLength = 20;
         _passwordTextField.layer.cornerRadius = 5;
+        _passwordTextField.secureTextEntry = YES;
 //        [_passwordTextField addTarget:self action:@selector(passwordTextFieldClick) forControlEvents:UIControlEventEditingChanged];
     }
     return _passwordTextField;
@@ -226,6 +247,7 @@
         [_libraryTextField becomeFirstResponder];
         _libraryTextField.limitLength = 20;
         _libraryTextField.layer.cornerRadius = 5;
+        _libraryTextField.hidden = YES;
 //        [_libraryTextField addTarget:self action:@selector(confirmTextFieldClick) forControlEvents:UIControlEventEditingChanged];
     }
     return _libraryTextField;

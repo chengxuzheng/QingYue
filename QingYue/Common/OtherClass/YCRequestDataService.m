@@ -231,13 +231,17 @@
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.responseSerializer = [AFJSONResponseSerializer serializerWithReadingOptions:NSJSONReadingMutableContainers];
-    [manager POST:fApi parameters:_paramDic success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
+    
+    [manager POST:fApi parameters:_paramDic progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        kTimeAfter(1.5, ^{kHideNet;});
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         response(responseObject);
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        NSLog(@"%@",error);
+        kTimeAfter(1, ^{kShowNet(@"网络或服务器出错");});
+        kTimeAfter(1.5, ^{kHideNet;});
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         failure();
+        NSLog(@"%@",error);
     }];
 }
 

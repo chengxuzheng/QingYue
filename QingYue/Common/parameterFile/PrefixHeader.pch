@@ -17,6 +17,8 @@
 #import <MBProgressHUD.h>
 #import <sqlite3.h>
 #import <JavaScriptCore/JavaScriptCore.h>
+#import <IQKeyboardManager.h>
+#import <SVProgressHUD.h>
 //添加遮罩层
 #import "UIView+GKExtension.h"
 #import "GKCover.h"

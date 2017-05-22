@@ -7,4 +7,7 @@ pod 'Masonry', '~> 0.6.3'
 pod 'FMDB', '~> 2.5'
 pod 'JSONKit', '~> 1.5pre'
 pod 'MBProgressHUD', '~> 0.9.2'
+pod 'IQKeyboardManager', '~> 4.0.9'
+pod ‘SVProgressHUD’, ‘~> 2.1.2’
+
 end
